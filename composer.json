@@ -1,6 +1,6 @@
 {
-    "name": "fabpot/silex-skeleton",
-    "description": "frontendapi",
+    "name": "sinsquare/silex-skeleton",
+    "description": "Silex 2.x skeleton",
     "license": "MIT",
     "type": "project",
     "require": {
