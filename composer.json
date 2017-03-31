@@ -1,0 +1,27 @@
+{
+    "name": "fabpot/silex-skeleton",
+    "description": "frontendapi",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.5.9",
+        "silex/silex": "~2.0",
+        "silex/web-profiler": "~2.0",
+        "symfony/monolog-bridge": "~2.8|^3.0",
+        "symfony/validator": "~2.8|^3.0",
+        "symfony/asset": "~2.8|^3.0",
+        "symfony/doctrine-bridge": "~2.8|^3.0",
+        "symfony/security": "~2.8|^3.0",
+        "symfony/browser-kit": "~2.8|^3.0",
+        "symfony/twig-bridge": "~2.8|^3.0",
+        "symfony/security-bundle": "~2.8|^3.0",
+        "sinsquare/doctrine-cache-provider": "1.*",
+        "friendsofphp/php-cs-fixer": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src"
+        }
+    },
+    "minimum-stability": "stable"
+}

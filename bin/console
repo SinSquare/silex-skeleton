@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Application as ConsoleApplication;
+use Symfony\Component\Console\Input\InputOption;
+use App\Command\DemoCommand;
+use Symfony\Component\Console\Input\ArgvInput;
+use Silex\Application;
+
+$loader = require_once __DIR__.'/../vendor/autoload.php';
+
+\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+
+set_time_limit(0);
+
+
+
+$input = new ArgvInput();
+$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
+
+$app = new Application();
+
+require __DIR__.'/../config/'.$env.'.php';
+require __DIR__.'/../app/app_'.$env.'.php';
+
+$console = new ConsoleApplication();
+$console->getDefinition()->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', 'dev'));
+
+$em = $app['doctrine.orm.em'];
+
+$helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
+    'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection()),
+    'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em),
+));
+
+$console->setHelperSet($helperSet);
+Doctrine\ORM\Tools\Console\ConsoleRunner::addCommands($console);
+
+$console->add(new DemoCommand($app));
+
+$console->run();
